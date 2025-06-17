@@ -8,6 +8,16 @@
     <div class="card-body">
         <form action="{{ route('products.store') }}" method="POST">
             @csrf
+
+            {{-- Kolom ID Produk --}}
+            <div class="mb-3">
+                <label for="id_produk" class="form-label">ID Produk</label>
+                <input type="text" class="form-control @error('id_produk') is-invalid @enderror" id="id_produk" name="id_produk" value="{{ old('id_produk') }}" required>
+                @error('id_produk')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="barcode" class="form-label">Barcode</label>

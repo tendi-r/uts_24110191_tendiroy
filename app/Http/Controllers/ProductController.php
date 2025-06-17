@@ -21,6 +21,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'id_produk' => 'required|unique:products|max:50',
             'barcode' => 'required|unique:products|max:20',
             'name' => 'required|max:100',
             'price' => 'required|numeric|min:0',
@@ -47,11 +48,12 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'barcode' => 'required|max:20|unique:products,barcode,'.$product->id,
-            'name' => 'required|max:100',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'category' => 'required|max:50',
+             'id_produk' => 'required|max:50|unique:products,id_produk,'.$product->id,
+             'barcode' => 'required|max:20|unique:products,barcode,'.$product->id,
+             'name' => 'required|max:100',
+             'price' => 'required|numeric|min:0',
+             'stock' => 'required|integer|min:0',
+             'category' => 'required|max:50',
         ]);
 
         $product->update($request->all());

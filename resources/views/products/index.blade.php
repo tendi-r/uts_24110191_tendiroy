@@ -1,4 +1,4 @@
-@extends('layouts.app') <!-- Pastikan layout utama ada -->
+@extends('layouts.app') 
 
 @section('content')
 <div class="container">
@@ -13,8 +13,8 @@
     <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Tambah Produk Baru</a>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <!-- Bagian HEADER TABEL -->
+        <table id="productTable" class="table table-bordered table-striped">
+           
             <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
@@ -27,7 +27,7 @@
                 </tr>
             </thead>
             
-            <!-- Bagian BODY TABEL -->
+            
             <tbody>
                 @foreach($products as $product)
                 <tr>
@@ -51,7 +51,36 @@
         </table>
     </div>
 
-    <!-- Pagination -->
-    {{ $products->links() }}
+    {{-- Tidak perlu pagination Laravel karena DataTables pakai pagination sendiri --}}
+    {{-- {{ $products->links() }} --}}
 </div>
+@endsection
+
+@section('scripts')
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <script>
+        $(document).ready(function () {
+            $('#productTable').DataTable({
+                 paging: true,
+    searching: true,
+    ordering: true,
+    lengthMenu: [1, 2, 3, 4, 5],
+    language: {
+        search: "🔍 Cari Produk:",
+        lengthMenu: "Tampilkan _MENU_ data per halaman",
+        zeroRecords: "Tidak ditemukan",
+        info: "Menampilkan _START_ - _END_ dari total _TOTAL_ data",
+        infoEmpty: "Tidak ada data yang tersedia",
+        paginate: {
+            next: "➡️ Berikutnya",
+            previous: "⬅️ Sebelumnya"
+                  }
+              }
+            });
+        });
+    </script>
 @endsection
